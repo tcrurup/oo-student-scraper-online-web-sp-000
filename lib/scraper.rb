@@ -37,19 +37,21 @@ class Scraper
     profile_page.css("div.social-icon-container a").each do |social_data|
       
       website_url = social_data.attribute("href").value
-      website_name = website_url.match(/\/\/w{0,3}\.?(\S+).com/)[1]
+      website_name = website_url.match(/\/\/w{0,3}\.?(\S+).com/)
       
-      #Check for a twitter, github, or linkedin account.  Create symbols for each website
-      #and assign them their corresponding url
-      if ["twitter", "github", "linkedin"].include?(website_name)
-        profile_hash[website_name.to_sym] = website_url
+      unless  website_name.nil?
+      
+        #Check for a twitter, github, or linkedin account.  Create symbols for each website
+        #and assign them their corresponding url
+        if ["twitter", "github", "linkedin"].include?(website_name[1])
+         profile_hash[website_name[1].to_sym] = website_url
+        end
+      
+        #Check if the url contains the profiles name.  If so set that url to the blog symbol
+        if profile_name.split(" ").all? { |x| website_name[1].include?(x.downcase) }
+         profile_hash[:blog] = website_url
+        end
       end
-      
-      #Check if the url contains the profiles name.  If so set that url to the blog symbol
-      if profile_name.split(" ").all? { |x| website_name.include?(x.downcase) }
-        profile_hash[:blog] = website_url
-      end
-      
     end
     
     #Finally grab the profile quote and the bio
