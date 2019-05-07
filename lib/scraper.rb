@@ -43,8 +43,13 @@ class Scraper
       
         #Check for a twitter, github, or linkedin account.  Create symbols for each website
         #and assign them their corresponding url
+<<<<<<< HEAD
         if ["twitter", "github", "linkedin"].include?(website_name[1])
          profile_hash[website_name[1].to_sym] = website_url
+=======
+        if ["twitter", "github", "linkedin"].include?(website_name)
+         profile_hash[website_name.to_sym] = website_url
+>>>>>>> 654a7a5ee6cd85de6c2b693d346174c948e03505
         end
       
         #Check if the url contains the profiles name.  If so set that url to the blog symbol
